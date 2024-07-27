@@ -1,0 +1,54 @@
+﻿@model MercDevs_ej2.Models.Datosfichatecnica
+
+@{
+    ViewData["Title"] = "Ficha Técnica";
+}
+
+<h1 style="text-align:center">Ficha Técnica</h1>
+
+<table class="table table-dark table-striped border border-light-subtle border-3">
+    <tr>
+        <th class="border-end">ID Ficha: @Model.IdDatosFichaTecnica</th>
+        <th class="border-end">ID Recepción: @Model.RecepcionEquipo.Id</th>
+        <th class="border-end">Fecha: @(Model.FechaInicio?.ToString("dd/MM/yyyy"))</th>
+    </tr>
+</table>
+
+<table class="table table-dark table-striped border border-light-subtle border-3">
+    <thead style="text-align:center">
+        <tr>
+            <th colspan="3">Datos del Usuario</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th class="border-end">Nombre: @Model.RecepcionEquipo?.IdClienteNavigation.Nombre</th>
+            <th class="border-end">Apellido: @Model.RecepcionEquipo?.IdClienteNavigation.Apellido</th>
+            <th class="border-end">Celular: @Model.RecepcionEquipo?.IdClienteNavigation.Telefono</th>
+        </tr>
+        <tr>
+            <td colspan="2" class="border-end">Correo: @Model.RecepcionEquipo?.IdClienteNavigation.Correo</td>
+            <td class="border-end">Dirección: @Model.RecepcionEquipo?.IdClienteNavigation.Direccion</td>
+        </tr>
+    </tbody>
+</table>
+
+<button id="btnGeneratePdf" class="btn btn-danger">
+    <i class="fa fa-file-pdf"></i> Descargar PDF
+</button>
+<button id="btnSendEmail" class="btn btn-info">
+    <i class="fa fa-envelope"></i> Enviar por correo
+</button>
+
+<script type="text/javascript">
+    document.getElementById("btnGeneratePdf").onclick = function () {
+        window.location.href = '@Url.Action("GeneratePdf", "Datosfichatecnicas", new { id = Model.IdDatosFichaTecnica })';
+    };
+
+    document.getElementById("btnSendEmail").onclick = function () {
+        var email = prompt("Ingrese el correo electrónico del cliente:");
+        if (email) {
+            window.location.href = '@Url.Action("SendEmail", "Datosfichatecnicas", new { id = Model.IdDatosFichaTecnica, email = "__EMAIL__" })'.replace("__EMAIL__", encodeURIComponent(email));
+        }
+    };
+</script>
