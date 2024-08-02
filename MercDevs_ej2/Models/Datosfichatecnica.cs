@@ -38,6 +38,8 @@ public partial class Datosfichatecnica
 
     public string? AntivirusInstalado { get; set; }
 
+    public int? Estado { get; set; }
+
     public int RecepcionEquipoId { get; set; }
 
     public virtual ICollection<Diagnosticosolucion> Diagnosticosolucions { get; set; } = new List<Diagnosticosolucion>();

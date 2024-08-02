@@ -71,6 +71,7 @@ public partial class MercyDeveloperContext : DbContext
             entity.Property(e => e.AntivirusInstalado)
                 .HasMaxLength(100)
                 .HasColumnName("Antivirus Instalado");
+            entity.Property(e => e.Estado).HasColumnType("int(11)");
             entity.Property(e => e.FechaFinalizacion).HasColumnType("datetime");
             entity.Property(e => e.FechaInicio).HasColumnType("datetime");
             entity.Property(e => e.LectorPdfinstalado)

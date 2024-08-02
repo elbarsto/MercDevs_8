@@ -38,12 +38,11 @@
         <thead>
             <tr>
                 <th>Nombre y Apellido del Cliente</th>
-                <th>Correo Electrónico del Cliente</th>
-                <th>Fecha Recepción de Equipo</th>
-                <th>Marca de PC</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Finalizacion</th>
                 <th>Modelo PC</th>
-                <th>Nombre del Servicio</th>
-                <th>Acciones</th>
+                <th>Marca Pc</th>
+                <th>Accion</th>
             </tr>
         </thead>
         <tbody>
@@ -51,22 +50,20 @@
             {
                 <tr>
                     <td>
-                        <a asp-controller="Clientes" asp-action="Details" asp-route-id="@recepcion.IdCliente">
-                            @recepcion.IdClienteNavigation.Nombre @recepcion.IdClienteNavigation.Apellido
+                        <a asp-controller="Clientes" asp-action="Details" asp-route-id="@recepcion.RecepcionEquipo.IdCliente">
+                            @recepcion.RecepcionEquipo.IdClienteNavigation.Nombre @recepcion.RecepcionEquipo.IdClienteNavigation.Apellido
                         </a>
                     </td>
-                    <td>@recepcion.IdClienteNavigation.Correo</td>
-                    <td>@recepcion.Fecha.ToString("dd/MM/yyyy")</td>
-                    <td>@recepcion.MarcaPc</td>
-                    <td>@recepcion.ModeloPc</td>
+                    <td>@recepcion.FechaInicio.ToString("dd/MM/yyyy")</td>
+                    <td>@recepcion.FechaFinalizacion.ToString("dd/MM/yyyy")</td>
+                    <td>@recepcion.RecepcionEquipo.ModeloPc</td
+                    <td>@recepcion.RecepcionEquipo.MarcaPc</td
                     <td>
-                        <a asp-controller="Servicios" asp-action="Details" asp-route-id="@recepcion.IdServicio">
-                            @recepcion.IdServicioNavigation.Nombre
+                        <a asp-controller="Datosfichatecnicas" asp-action="Index" asp-route-id="@recepcion.RecepcionEquipo.IdServicio">
+                            Ver Ficha
                         </a>
                     </td>
-                    <td>
-                        <a asp-controller="Recepcionequipoes" asp-action="DetailsId" asp-route-id="@recepcion.Id">Ver Recepción Equipo</a>
-                    </td>
+
                 </tr>
             }
         </tbody>

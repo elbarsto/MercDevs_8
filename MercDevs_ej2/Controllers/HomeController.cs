@@ -1,18 +1,15 @@
 using MercDevs_ej2.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-
-//Para cerrar Sesión
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-
-//FIN cerrar sesión
+using System.Threading.Tasks; // Agregar este using para manejar tareas asincrónicas
 
 namespace MercDevs_ej2.Controllers
 {
-    [Authorize] //Para que no autorice ingresar a ningun controlador sin estar Autenticado
+    [Authorize] // Requiere autenticación para acceder a cualquier acción del controlador
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -26,14 +23,13 @@ namespace MercDevs_ej2.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var recepciones = await _context.Recepcionequipos
-                .Include(r => r.IdClienteNavigation)
-                .Include(r => r.IdServicioNavigation)
-                .Where(r => r.Estado != "Finalizar")
+            var fichasTecnicas = await _context.Datosfichatecnicas
+                .Include(d => d.RecepcionEquipo.IdClienteNavigation)
+                .Include(d => d.RecepcionEquipo.IdServicioNavigation) // Incluir datos relacionados según sea necesario
+                .Where(d => d.Estado == 1) // Filtrar por estado activo
                 .ToListAsync();
 
-
-            return View(recepciones);
+            return View(fichasTecnicas);
         }
 
         public IActionResult Privacy()
@@ -47,12 +43,11 @@ namespace MercDevs_ej2.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        //Para Salir sesión
-        public async Task<IActionResult>  LogOut()
+        // Para cerrar sesión
+        public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Ingresar", "Login");
         }
-        //Fin Salir Sesión
     }
 }
